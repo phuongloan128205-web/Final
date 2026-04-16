@@ -1,0 +1,6 @@
+streamlit
+textstat
+language-tool-python
+pandas
+matplotlib
+nltk
