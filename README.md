@@ -152,7 +152,7 @@ The system was tested with essays of varying difficulty levels:
 
 ## 👨‍💻 Author
 
-**Student Project – AI Writing Feedback System**
+**Phuong Loan – AI Writing Feedback System**
 
 ---
 
@@ -162,15 +162,5 @@ The system was tested with essays of varying difficulty levels:
 * Practical real-world application
 * Interactive and user-friendly interface
 * Comparable to a **mini Grammarly system**
-
----
-
-## 🚀 Demo (Optional)
-
-👉 Add your deployed link here:
-
-```
-https://your-app-link.streamlit.app
-```
 
 ---
