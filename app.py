@@ -9,6 +9,25 @@ from datetime import datetime
 tool = language_tool_python.LanguageTool('en-US')
 DATA_FILE = "history.csv"
 
+st.set_page_config(page_title="AI Writing Feedback", page_icon="📝", layout="wide")
+
+# ===== DARK MODE =====
+dark_mode = st.sidebar.toggle("🌙 Dark Mode")
+
+if dark_mode:
+    st.markdown("""
+    <style>
+    .main {background-color: #0e1117; color: white;}
+    .stTextArea textarea {background-color: #262730; color: white;}
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <style>
+    .main {background-color: #f5f7fa;}
+    </style>
+    """, unsafe_allow_html=True)
+
 # ===== FUNCTIONS =====
 def analyze_essay(text):
     matches = tool.check(text)
@@ -26,6 +45,36 @@ def analyze_essay(text):
     score = max(0, 10 - num_errors * 0.5)
 
     return score, matches, corrected, vocab_score, coherence
+
+
+def generate_feedback(score, errors, vocab, coherence):
+    feedback = ""
+
+    if score >= 8:
+        feedback += "Your writing is very good. "
+    elif score >= 5:
+        feedback += "Your writing is average but needs improvement. "
+    else:
+        feedback += "Your writing has many issues. "
+
+    if errors > 10:
+        feedback += "You should focus on reducing grammar mistakes. "
+    elif errors > 5:
+        feedback += "There are some grammar errors to fix. "
+    else:
+        feedback += "Grammar is mostly correct. "
+
+    if vocab > 0.3:
+        feedback += "Your vocabulary is advanced. "
+    elif vocab > 0.15:
+        feedback += "Your vocabulary is acceptable. "
+    else:
+        feedback += "Try to use more complex words. "
+
+    if not coherence:
+        feedback += "Use linking words to improve coherence."
+
+    return feedback
 
 
 def save_result(score, errors, vocab, coherence):
@@ -54,87 +103,96 @@ def load_data():
         return pd.read_csv(DATA_FILE)
     return pd.DataFrame()
 
-# ===== UI =====
-st.set_page_config(page_title="AI Writing Feedback", page_icon="📝")
 
+# ===== SIDEBAR =====
+st.sidebar.title("⚙️ About App")
+st.sidebar.info("""
+AI Writing Feedback System
+
+✔ Grammar Check  
+✔ Vocabulary Analysis  
+✔ Coherence Detection  
+✔ Score Tracking  
+""")
+
+st.sidebar.markdown("---")
+st.sidebar.write("👨‍💻 Developed by Phuong Loan")
+
+# ===== HEADER =====
 st.title("📝 AI Writing Feedback System")
-st.write("Improve your English writing with AI")
-
-# ===== THEORY PART =====
-st.subheader("🎯 Research Question")
-st.write("""
-Can AI automatically detect grammatical errors and improve English writing quality?
-""")
-
-st.subheader("⚙️ Methodology")
-st.write("""
-- Grammar checking using LanguageTool
-- Vocabulary analysis based on word length
-- Coherence detection using linking words
-- Scoring based on number of grammatical errors
-""")
+st.caption("Improve your English writing with AI")
 
 # ===== INPUT =====
-text = st.text_area("✏️ Enter your paragraph:")
+st.subheader("✏️ Enter your paragraph")
 
-if st.button("Analyze"):
+text = st.text_area("", height=180, placeholder="Type your essay here...")
+
+# ===== UPLOAD FILE =====
+uploaded_file = st.file_uploader("📂 Upload .txt file", type=["txt"])
+
+if uploaded_file is not None:
+    text = uploaded_file.read().decode("utf-8")
+    st.text_area("📄 File Content", text, height=150)
+
+# ===== BUTTON =====
+if st.button("🚀 Analyze Essay"):
     if text.strip() == "":
         st.warning("Please enter text!")
     else:
         score, errors, corrected, vocab, coherence = analyze_essay(text)
-
-        # Save data
         save_result(score, len(errors), vocab, coherence)
 
-        # ===== RESULT =====
-        st.subheader("📊 Score")
-        st.write(f"{score:.1f} / 10")
+        # ===== DASHBOARD =====
+        st.subheader("📊 Results Overview")
 
-        st.subheader("❌ Grammar Issues")
-        if errors:
-            for e in errors:
-                st.write("-", e.message)
-        else:
-            st.success("No grammar errors 🎉")
+        col1, col2, col3, col4 = st.columns(4)
 
-        st.subheader("💡 Corrected Version")
-        st.success(corrected)
+        col1.metric("Score", f"{score:.1f}/10")
+        col2.metric("Errors", len(errors))
+        col3.metric("Vocabulary", 
+            "Advanced" if vocab > 0.3 else
+            "Intermediate" if vocab > 0.15 else "Basic")
+        col4.metric("Coherence", "Good" if coherence else "Weak")
 
-        st.subheader("🧠 Vocabulary Level")
-        if vocab > 0.3:
-            st.write("Advanced")
-        elif vocab > 0.15:
-            st.write("Intermediate")
-        else:
-            st.write("Basic")
+        st.progress(score / 10)
 
-        st.subheader("🔗 Coherence")
-        st.write("Good" if coherence else "Needs improvement")
+        # ===== TABS =====
+        tab1, tab2, tab3 = st.tabs(["❌ Errors", "💡 Correction", "🧠 Analysis"])
 
-        # ===== ERROR ANALYSIS =====
-        st.subheader("❌ Error Analysis")
-        st.write("""
-Common errors detected include:
-- Subject-verb agreement
-- Verb tense mistakes
-- Missing articles
-- Sentence structure issues
-""")
+        with tab1:
+            if errors:
+                for e in errors:
+                    st.error(e.message)
+            else:
+                st.success("No grammar errors 🎉")
+
+        with tab2:
+            st.success(corrected)
+
+        with tab3:
+            st.write("### 🧠 AI Feedback")
+
+            feedback = generate_feedback(score, len(errors), vocab, coherence)
+            st.info(feedback)
+
+            st.write("### 📌 Detailed Analysis")
+            st.write(f"- Errors detected: {len(errors)}")
+            st.write(f"- Vocabulary level: {'High' if vocab > 0.3 else 'Medium' if vocab > 0.15 else 'Low'}")
+            st.write(f"- Coherence: {'Good' if coherence else 'Needs improvement'}")
 
 # ===== STATISTICS =====
-st.subheader("📊 Your Statistics")
+st.subheader("📈 Writing History")
 
 df = load_data()
 
 if not df.empty:
-    df = df.sort_values(by="Time", ascending=False)
+    col1, col2 = st.columns(2)
+
+    col1.metric("📄 Total Essays", len(df))
+    col2.metric("⭐ Avg Score", round(df["Score"].mean(), 2))
 
     st.dataframe(df, use_container_width=True)
 
-    st.write("📌 Total essays:", len(df))
-    st.write("⭐ Average score:", round(df["Score"].mean(), 2))
-
-    # Chart
     fig, ax = plt.subplots()
     ax.plot(df["Score"], marker='o')
     ax.set_title("Score Progress")
@@ -143,23 +201,15 @@ if not df.empty:
 
     st.pyplot(fig)
 
-    # Download
     st.download_button(
-        "📥 Download history",
+        "📥 Download CSV",
         df.to_csv(index=False),
         "history.csv",
         "text/csv"
     )
-
 else:
-    st.write("No data yet.")
+    st.info("No data yet. Start analyzing!")
 
-# ===== EVALUATION =====
-st.subheader("📊 Evaluation")
-
-st.write("""
-The system was tested with multiple essays of varying difficulty levels.
-Essays with more grammatical errors received lower scores,
-while well-written essays achieved higher scores.
-This demonstrates the effectiveness of the system.
-""")
+# ===== FOOTER =====
+st.markdown("---")
+st.caption("AI Writing Feedback System | Final Project 🚀")
