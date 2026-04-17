@@ -1,106 +1,176 @@
-📝 AI Writing Feedback System
-📌 Description
+# 📝 AI Writing Feedback System
 
-This project is an AI-powered writing feedback system that analyzes English text and provides intelligent suggestions to improve writing quality.
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Streamlit](https://img.shields.io/badge/Framework-Streamlit-red?logo=streamlit)
+![NLP](https://img.shields.io/badge/Field-NLP-green)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
-The system detects grammar errors, evaluates vocabulary level, analyzes coherence, and generates an overall score, along with automated feedback similar to a teacher.
+---
 
-🎯 Research Question
+## 📌 Description
 
-Can AI automatically detect grammatical errors and improve English writing quality?
+This project is an **AI-powered writing feedback system** that analyzes English text and provides intelligent suggestions to improve writing quality.
 
-⚙️ Methodology
+The system detects **grammar errors**, evaluates **vocabulary level**, analyzes **coherence**, and generates an overall **score**, along with **AI-style feedback** similar to a teacher.
+
+---
+
+## 🎯 Research Question
+
+> Can AI automatically detect grammatical errors and improve English writing quality?
+
+---
+
+## ⚙️ Methodology
 
 The system applies the following techniques:
 
-Grammar checking using LanguageTool
-Vocabulary analysis based on word length
-Coherence detection using linking words (e.g., however, therefore)
-Rule-based scoring system based on grammar errors
-Automated feedback generation based on writing performance
-🚀 Features
-✨ Core Features
-✏️ Input paragraph and analyze writing quality
-❌ Detect grammar errors
-💡 Provide corrected version of the text
-🧠 Evaluate vocabulary level (Basic / Intermediate / Advanced)
-🔗 Analyze coherence using linking words
-📊 Assign a score (0–10)
-🔥 Advanced Features (NEW)
-🌙 Dark Mode Toggle
-📂 Upload .txt file for analysis
-🤖 AI-style automatic feedback (like a teacher)
-📊 Dashboard with metrics (Score, Errors, Vocabulary, Coherence)
-📈 Score progress chart
-📥 Download results as CSV
-🧠 Technologies Used
-Python
-Streamlit
-LanguageTool
-Pandas
-Matplotlib
-📂 Project Structure
+* Grammar checking using **LanguageTool**
+* Vocabulary analysis based on word complexity
+* Coherence detection using linking words *(e.g., however, therefore)*
+* Rule-based scoring system
+* Automated feedback generation
+
+---
+
+## 🚀 Features
+
+### ✨ Core Features
+
+* ✏️ Input paragraph and analyze writing quality
+* ❌ Detect grammar errors
+* 💡 Provide corrected version
+* 🧠 Evaluate vocabulary level *(Basic / Intermediate / Advanced)*
+* 🔗 Analyze coherence
+* 📊 Assign score *(0–10)*
+
+### 🔥 Advanced Features
+
+* 🌙 Dark Mode
+* 📂 Upload `.txt` file
+* 🤖 AI-style automatic feedback
+* 📊 Dashboard with metrics
+* 📈 Score progress chart
+* 📥 Export results to CSV
+
+---
+
+## 📊 How It Works
+
+1. User inputs text or uploads a `.txt` file
+2. System checks grammar using LanguageTool
+3. Text is corrected automatically
+4. Vocabulary level is calculated
+5. Coherence is evaluated
+6. Score is generated
+7. AI feedback is provided
+8. Results are saved and visualized
+
+---
+
+## 📈 Example Output
+
+* **Score:** 7.5 / 10
+* **Grammar errors detected**
+* **Corrected version provided**
+* **Vocabulary level:** Intermediate
+* **Coherence:** Good
+
+💡 Feedback:
+
+> Your writing is average but needs improvement. There are some grammar errors to fix.
+
+---
+
+## 🧠 Technologies Used
+
+| Technology   | Purpose                   |
+| ------------ | ------------------------- |
+| Python       | Core programming language |
+| Streamlit    | Web interface             |
+| LanguageTool | Grammar checking          |
+| Pandas       | Data processing           |
+| Matplotlib   | Data visualization        |
+
+---
+
+## 📂 Project Structure
+
+```
 ai-writing-feedback/
 │
-├── app.py              # Main Streamlit application
-├── history.csv         # Saved results (auto-generated)
+├── app.py              # Main application
+├── history.csv         # Stored results
 ├── requirements.txt    # Dependencies
-└── README.md           # Project documentation
-▶️ How to Run the Project
-1. Install dependencies
+└── README.md           # Documentation
+```
+
+---
+
+## ▶️ How to Run
+
+### 1. Install dependencies
+
+```bash
 pip install -r requirements.txt
-2. Run the application
+```
+
+### 2. Run the app
+
+```bash
 streamlit run app.py
-3. Open in browser
+```
+
+### 3. Open browser
+
+```
 http://localhost:8501
-📊 How It Works
-User inputs text or uploads a .txt file
-The system checks grammar using LanguageTool
-Errors are detected and corrected automatically
-Vocabulary complexity is calculated
-Coherence is evaluated using linking words
-A score is generated based on errors
-AI-style feedback is provided
-Results are saved and visualized
-📈 Example Output
-Score: 7.5 / 10
-Grammar errors detected
-Corrected version provided
-Vocabulary level: Intermediate
-Coherence: Good
+```
 
-AI Feedback:
+---
 
-"Your writing is average but needs improvement. There are some grammar errors to fix."
+## 📊 Evaluation
 
-📊 Evaluation
+The system was tested with essays of varying difficulty levels:
 
-The system was tested with multiple essays of varying difficulty levels:
+* Essays with more grammar errors → lower scores
+* Well-written essays → higher scores
 
-Essays with more grammatical errors received lower scores
-Well-written essays achieved higher scores
+✅ This demonstrates the effectiveness of the system.
 
-This demonstrates the system’s effectiveness in improving writing quality.
+---
 
-💡 Future Improvements
-Integrate AI models (e.g., GPT, BERT) for smarter correction
-Add IELTS band estimation
-Highlight errors directly in text (like Grammarly)
-Support multiple languages
-User authentication system
-Deploy online (Streamlit Cloud)
-👨‍💻 Author
-Student Project – AI Writing Feedback System
-⭐ Notes
+## 💡 Future Improvements
 
-This project demonstrates the application of:
+* Integrate advanced AI models *(GPT, BERT)*
+* Add IELTS band estimation
+* Highlight errors in text *(like Grammarly)*
+* Multi-language support
+* Deploy online *(Streamlit Cloud)*
 
-Natural Language Processing (NLP)
-Rule-based AI systems
-Interactive Web Apps using Streamlit
+---
 
-in a real-world writing assistant system.
+## 👨‍💻 Author
 
-🚀 Project Level
+**Student Project – AI Writing Feedback System**
 
-This version includes advanced UI and intelligent feedback features, making it comparable to a mini Grammarly-like system.
+---
+
+## ⭐ Project Highlights
+
+* Combines **NLP + AI + Web App**
+* Practical real-world application
+* Interactive and user-friendly interface
+* Comparable to a **mini Grammarly system**
+
+---
+
+## 🚀 Demo (Optional)
+
+👉 Add your deployed link here:
+
+```
+https://your-app-link.streamlit.app
+```
+
+---
